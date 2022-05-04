@@ -1,0 +1,25 @@
+.card {
+	margin-bottom: 25px;
+}
+
+.card-small {
+	width: 200px;
+}
+
+.card-medium {
+	width: 350px;
+}
+
+.card-large {
+	width: 500px;
+}
+
+.card-title {
+	text-align: center;
+}
+
+.card-image {
+	width: 100%;
+	height: auto;
+}
+
