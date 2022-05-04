@@ -38,7 +38,7 @@ The code for each example is located in a separate folder under `src`.
 
 A code example can be run by uncommenting the corresponding "App"/component it in `src/index.ts`. This renders the _App_ component for that example.
 
-## feed/v1
+## feed
 
 This example demonstrates the fundamentals of coding React components, including JSX syntax and rendering lists.
 
@@ -61,18 +61,6 @@ This example demonstrates component styling, event handling, hooks and parent / 
 The `useEffect` folder contains microexamples that highlight certain aspects of using the _useEffect_ hook. See each file in the folder for comments.
 
 > Choose which microexample to run by uncommenting it in `useEffect/index.js`.
-
-## feed/v2
-
-Demonstrates how to catch application errors that may occur in a component when it's rendered.
-
-In this example, an error occurs in the _Card_ component if it receives an invalid (undefined) title; this results in an error being thrown.
-
-By wrapping each _Card_ component in an _ErrorBoundary_ component, which implements a so-called _error boundary_, the error is caught and another _Card_ component, reflecting the error, is rendered as a fallback UI instead.
-
-The _ErrorBoundary_ component is implemented using the _render props_ pattern, which makes it **reusable** and not coupled to logic that determines _what kind of_ error fallback is rendered.
-
-Finally, as it's possible to sometimes render an invalid list of items, a top-level error boundary catches such an error and allows for **retrying** rendering the list.
 
 ## dependencyContext
 
