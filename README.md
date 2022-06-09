@@ -99,7 +99,7 @@ The general structure of this example is as follows:
 
   User authentication logic is written in a context provider.
 
-  The component tree is rendered in a React Context called _AppContext_ (see `AppProvider.tsx`). This context invokes the _useAuth_ hook to get and subsequently manage global authentication state and related functionality (login and logout).
+  The component tree is rendered in a React Context called _AppContext_ (see `AppProvider.tsx`).
 
   The components that access the _AppContext_ to retrieve global authentication state and functionality are:
 
