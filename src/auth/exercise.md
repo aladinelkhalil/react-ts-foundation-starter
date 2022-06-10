@@ -70,8 +70,6 @@ If you inspect the RouteGuard component, you'll see that it accesses the authent
 
 ## Optional
 
-_No solution exists for this optional_
-
 Now the _Users_ component renders a _User_ whenever we click on a name in the users-list. A different approach can be made here. _User_ is already its own component, the thing we could do is to give it its own route aswell, much like _Login_ and _Users_ already have. The challenge here is to render the same _User_ component but with different props depending on the name we click on. We need a couple of things in order to achieve this.
 
 - First we need to lift up the state of the _Users_ component (_i.e. the users-list_) to the context in order for _User_ component to access it. Make sure that the context also shares that state with the rest of the application.

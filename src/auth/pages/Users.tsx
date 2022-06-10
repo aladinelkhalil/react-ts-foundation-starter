@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 
 import User from "../components/User";
-import { IUser } from "../../interfaces"; // Create this interface
+
+// This interface can be extracted to an interface.ts file and imported here instead, since this one is used in multiple places.
+interface IUser {
+	id: number;
+	name: string;
+	email: string;
+}
 
 const Users = (): JSX.Element => {
 	const [users, setUsers] = useState<IUser[] | null>(null);

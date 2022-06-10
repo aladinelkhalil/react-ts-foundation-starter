@@ -1,4 +1,9 @@
-import { IUser } from "../../interfaces"; // Create this interface
+// This interface can be extracted to an interface.ts file and imported here instead, since this one is used in multiple places.
+interface IUser {
+	id: number;
+	name: string;
+	email: string;
+}
 
 interface IUserProps {
 	user: IUser;

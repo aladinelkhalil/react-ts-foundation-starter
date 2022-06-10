@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
-import { ILink } from "../../interfaces"; // Create this interface
+
+// This interface can be extracted to an interface.ts file and imported here instead, since this one is used in multiple places.
+interface ILink {
+    href: string;
+    name: string;
+}
 
 interface NavigationProps {
 	links: ILink[];
