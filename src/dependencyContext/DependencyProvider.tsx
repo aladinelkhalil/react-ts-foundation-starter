@@ -1,6 +1,6 @@
 import React, { useState, useContext, createContext, ReactNode } from "react";
-import { TLogService } from "../types";
 import { logService } from "./logService";
+import { LogService } from "./types";
 
 interface IDependencyProviderProps {
 	children: ReactNode;
@@ -9,7 +9,7 @@ interface IDependencyProviderProps {
 interface IDependencyContext {
 	shouldLog: boolean;
 	setShouldLog: React.Dispatch<React.SetStateAction<boolean>>;
-	logService: TLogService;
+	logService: LogService;
 }
 
 export const DependencyContext = createContext<IDependencyContext>(

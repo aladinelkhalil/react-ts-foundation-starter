@@ -1,7 +1,7 @@
-import { TLogService } from "../types";
+import { LogService } from "./types";
 
 // Application dependencies (services).
-export let logService: TLogService;
+export let logService: LogService;
 
 // Configure service implementation(s).
 if (process.env.NODE_ENV === "development") {
