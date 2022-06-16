@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 const Login = (): JSX.Element => {
-	// TODO: Get what is needed from AppContext to implement login functionality.
+	// TODO: Get what is needed from Context/Redux to implement login functionality.
 
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();

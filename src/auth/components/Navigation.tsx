@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 // This interface can be extracted to an interface.ts file and imported here instead, since this one is used in multiple places.
 interface ILink {
-    href: string;
-    name: string;
+	href: string;
+	name: string;
 }
 
 interface NavigationProps {
@@ -11,7 +11,7 @@ interface NavigationProps {
 }
 
 const Navigation = ({ links }: NavigationProps): JSX.Element => {
-	// TODO: Get what is needed from AppContext to implement logout functionality.
+	// TODO: Get what is needed from Context/Redux to implement the logout functionality.
 
 	return (
 		<nav>

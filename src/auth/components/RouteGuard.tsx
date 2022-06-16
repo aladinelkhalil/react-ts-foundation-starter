@@ -5,7 +5,7 @@ interface RequireAuthProps {
 }
 
 const RouteGuard = ({ children }: RequireAuthProps): JSX.Element => {
-	// const { user } = useAppContext(); // This will work when the useAppContext has been properly coded
+	// TODO: Get what is needed from Context/Redux to access the user.
 
 	useEffect(() => {
 		//Redirect them to the /login if not logged in.
