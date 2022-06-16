@@ -13,7 +13,7 @@ const Login = (): JSX.Element => {
 	useEffect(() => {
 		/*
 		 * TODO: Check if user already is logged in in this useEffect. If so,
-		 * redirect to "/users" using navigate.
+		 * redirect to "/users" using useNavigate.
 		 */
 	}, []);
 

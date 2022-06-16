@@ -14,7 +14,57 @@ The application has a link to navigate to a page component ("view") - `pages/Use
 
    Try a path such as _http://localhost:3000/foo_ to verify that the catch-all route works.
 
-## Part 2 - App Context
+## Part 2 - Redux
+
+(For context instructions, look farther down)
+
+As part of the application requirements, the /users route must be protected, i.e. an user must be logged in to see the list of users.
+
+The state of a logged in user must be shared among several components in the component tree, including:
+
+- The `components/RouteGuard` component, which determines whether or not a route should be rendered based on authentication status.
+
+- The `pages/Login` view, which enables a user to log in.
+
+- The `components/Navigation` component, which renders a logout button only if the user is logged in.
+
+As such, authentication state is best placed in a redux state manager that can be used throughout the application.
+
+> Refer to the `dependencyRedux` example for guidance when implementing the steps below.
+
+1. Create a `store.ts` file. This is the content it should have:
+
+```typescript
+import { configureStore } from "@reduxjs/toolkit";
+
+export const store = configureStore({
+	reducer: {
+		// TODO: Implement the slice/slices you need.
+	},
+});
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+/**
+ * These hooks is just an implementation of the already existing hooks in
+ * redux, we have just given them the correct typing.
+ */
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+```
+
+2. Create the `authSlice.ts` file. In here you need a couple of imports but you also need to define the state for the slice. This should be an interface called _IAuthState_ and it should contain a _user_ and a _loginError_.
+
+3. Create the slice and it should contain two reducer functions. One for _login_ and one for _logout_, they should interact with the state (both _user_ and _loginError_) in a proper way. You can decide yourself how you implement the login functionality in your application. In the example solution, if the user types in "admin" in the input field, they get logged in. The "admin"-string is than set as the value of the IAuthState user. See the context section for some hints.
+   Don't forget to make to proper exports at the bottom of the file.
+
+4. In the `index.tsx` file you need to wrap your JSX in a **Provider** element. This element is what gives all the nested elements access to the global state. The **Provider** accepts an attribute **store** which should have the value of the exported variable from the **store.ts** file.
+
+5. To try out that your redux store works, do the TODOS in the `RouteGuard` component. Wrap the Users component with the `RouteGuard` component in the element-prop of the Route that handles the path "users". Navigate to the /users route; it should redirect to the Login view.
+
+## Part 2 - Context
 
 As part of the application requirements, the /users route must be protected, i.e. an user must be logged in to see the list of users.
 
@@ -30,11 +80,11 @@ As such, authentication state is best placed in a context that the application i
 
 > Refer to the `dependencyContext` example for guidance when implementing the steps below.
 
-1. In the `AppProvider.tsx` file:
+1. Create an `AppProvider.tsx` file:
 
-- Create an `AppContext`.
+- Create an `AppContext` inside.
 
-- Create an `AppProvider` component which handles the auth logic, see below for the code it should contain.
+- This code below is the logic the `AppProvider` should contain.
 
   ```typescript
   const [user, setUser] = useState<string | null>(null);
@@ -56,7 +106,7 @@ As such, authentication state is best placed in a context that the application i
   // Render AppContext.Provider with these two state variables and methods as the context value. Don't forget to type everything up.
   ```
 
-- Return the context from the `useAppContext` helper hook which you will figure out yourself how to create.
+- Return the context from the `useAppContext` helper hook which you will have to figure out yourself how to create. The hook can be places inside the `AppProvider`.
 
 2. Render the AppProvider component as the top-level component in _index.tsx_.
 
@@ -69,6 +119,8 @@ To verify that the application context is working, do the following:
 If you inspect the RouteGuard component, you'll see that it accesses the authentication state to determine whether or not to render a guarded route. As the user has not logged in (and as we haven't implemented login functionality yet), it redirects to the Login view.
 
 ## Optional
+
+### (For this exercise in general, not specific to context or redux)
 
 Now the _Users_ component renders a _User_ whenever we click on a name in the users-list. A different approach can be made here. _User_ is already its own component, the thing we could do is to give it its own route aswell, much like _Login_ and _Users_ already have. The challenge here is to render the same _User_ component but with different props depending on the name we click on. We need a couple of things in order to achieve this.
 
@@ -92,9 +144,13 @@ Implement the comments marked with _TODO_.
 
 To allow the user to logout, implement the comments marked with _TODO_ in the `components/Navigation` component.
 
-## Optional Parts
+## Optional
 
-Description of optional parts to this exercise. _No solution exists for this part._
+The logic for fetching users is now written in the `users` component with all the state and everything. Try to extract this logic to an `UsersSlice` and also add fetching statuses that the application can react to. Maybe show some feedback the fetch is loading or went wrong or something.
+
+Reducers as we have used them now, can only handle synchronous logic, but fetching is something asynchronous. For that we need something calld `createAsyncThunk` which is a function that is included in redux toolkit. Here is the link to the [documentation](https://redux-toolkit.js.org/api/createAsyncThunk). This optional is a challenge but it's worth it. You can also check the solution [repo](https://github.com/DerFahnrich/react-ts-foundation-final) for an example of this.
+
+## Optional Parts - No solution exists
 
 ### Loading Data with 3rd Party Library
 

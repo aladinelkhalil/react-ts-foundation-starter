@@ -28,6 +28,14 @@ const dependenciesSlice = createSlice({
 	 * and an action payload (The action payload can be optional depending on the reducers
 	 * function). When an actions is dispatched the slice goes through its reducers to see
 	 * which reducer that matches the incoming action.
+   * 
+	 * Redux Toolkit allows us to write "mutating" logic in reducers. It doesn't
+	 * actually mutate the state because it uses the Immer library underneath, which detects
+	 * changes to a "draft state" and produces a brand new immutable state based
+	 * off those changes
+   * 
+   * The type "PayloadAction" is a generic type that redux gives us so that we can type up
+   * our action in a correct way.
 	 * */
 	reducers: {
 		setShouldLog: (state, action?: PayloadAction<boolean>) => {
