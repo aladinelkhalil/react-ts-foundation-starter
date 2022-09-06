@@ -68,23 +68,23 @@ _Todo_ accepts the following (required) props:
 - title: `string`
 - completed: `boolean`
 
-Create an interface for this props.
+Create an interface for these props.
 
 It returns the following markup:
 
 ```html
 <Container>
 	<div>
-		<Checkbox id="{id}" type="checkbox" />
-		<label htmlFor="{id}">Todo title goes here...</label>
+		<Checkbox id={id} type="checkbox" />
+		<Label htmlFor={id}>Todo title goes here...</Label>
 	</div>
-	<button>Button text goes here...</button>
+	<Button>Button text goes here...</Button>
 </Container>
 ```
 
 Notice that the markup seemingly contains other React components; these are so-called _styled components_, which render just as regular components.
 
-Create the following styled components, and put them in a seperate file called _styledComponents.ts_ the should live in the todo-folder. Don't forget to export them as _const_ so you can import them into the _todo.ts_ file :
+Create the following styled components, and put them in a separate file called _styledComponents.ts_ that should live in the todo-folder. Don't forget to export them as _const_ so you can import them into the _todo.ts_ file:
 
 - _Container_: a `div` styled with:
 
@@ -112,6 +112,8 @@ Create the following styled components, and put them in a seperate file called _
   user-select: none;
   ```
 
+  > Installing the VS Code extension [vscode-styled-components](https://marketplace.visualstudio.com/items?itemName=styled-components.vscode-styled-components) helps with syntax highlighting and intellisense.
+
   In addition, add these CSS properties below to the label styled component. Their values should adapt based on the _completed_ prop passed to _Todo_. In order for them to properly work with TS you also need an interface that defines the props the label accepts, put it in the _styledComponents.ts_ file:
 
   ```css
@@ -132,11 +134,11 @@ Create the following styled components, and put them in a seperate file called _
   }
   ```
 
-Render the list of todos which has been sent down from the _App_ component to the _TodoList_, which in turn renders each indivdual _Todo_.
+Render the list of todos which has been sent down from the _App_ component to the _TodoList_, which in turn renders each individual _Todo_.
 
 ## Part 2: Component state and event handling
 
-In this part, the list of todos will be managed as component state (in _App_). In order to manage this we need to up our skills in TS a litte. These two links will help you on your way:
+In this part, the list of todos will be managed as component state (in _App_). In order to manage this we need to up our skills in TS a little. These two links will help you on your way:
 
 Documentation (Very good): [Typescript](https://www.typescriptlang.org/)
 
@@ -148,13 +150,13 @@ In order to create a todo with a user-entered title, the following must be imple
 
 - Add a _handleOnSubmit_ event handler that is bound to the _onSubmit_ form event in _TodoForm_.
 
-  > To prevent default form submission, call _event.preventDefault()_; Every "event-handler" in react automatically gets acces to an _event_-object that contains information about the event. But in order to make this work with TS (so the event-handler actually recognize the event-object) you need to properly type it according to the TS rules. Try logging this event to the console to see what it contains.
+  > To prevent default form submission, call _event.preventDefault()_; Every "event-handler" in react automatically gets access to an _event_-object that contains information about the event. But in order to make this work with TS (so the event-handler actually recognize the event-object) you need to properly type it according to the TS rules. Try logging this event to the console to see what it contains.
 
   Verify that the event handler is called upon submitting the form (pressing Enter) by logging something, "Submitting" maybe.
 
-- Add a _handleOnChange_ event handler that is bound to the _onChange_ event on the input field in _TodoForm_. This method must interact with a state variable in order for the component to controll its own state. Again, don't forget to type it according to the rules of TS.
+- Add a _handleOnChange_ event handler that is bound to the _onChange_ event on the input field in _TodoForm_. This method must interact with a state variable in order for the component to control its own state. Again, don't forget to type it according to the rules of TS.
 
-- Therefor also create a _useState_ variable, "todoTitle", that will contain the value of the input field. The set method of this state variable is the one that the _handleOnChange_ method needs to interact with. _useState_ is a generic function in TS. Check the [ReactTypescript](https://react-typescript-cheatsheet.netlify.app/) docs for more info, but her is a sneak peak:
+- Therefor also create a _useState_ variable, "todoTitle", that will contain the value of the input field. The set method of this state variable is the one that the _handleOnChange_ method needs to interact with. _useState_ is a generic function in TS. Check the [ReactTypescript: useState](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks#usestate) docs for more info, but here is a sneak peak:
 
 ```typescript
 const [value, setValue] = useState<number>(0);
@@ -184,6 +186,8 @@ const [value, setValue] = useState<number>(0);
   > See [this link](https://www.samanthaming.com/tidbits/14-combine-multiple-arrays-using-spread/) for how to create/combine arrays using the spread operator.
 
   Pass the _createTodo_ callback function as a prop to _TodoForm_.
+
+  > See [this link](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example) for how to type functions as props.
 
   Invoke the callback function upon form submission; verify that a new todo is added (first) to the list.
 
@@ -229,10 +233,10 @@ Instead of embedding static (mock) todos as part of the application bundle, the 
 - To differentiate between whether todos have been fetched or not, change the _useState_ hook call for the todos to:
 
   ```typescript
-  const [todos, setTodos] = useState<ITodo | null>(null);
+  const [todos, setTodos] = useState<ITodo[] | null>(null);
   ```
 
-  **Question**: Why is this better than simply having an empty array as the initial value?
+  **Question**: Is this better than simply having an empty array as the initial value?
 
 - Update the _useEffect_ for setting the document title - if no todos are yet available, display `Todos (N/A)`.
 
@@ -243,7 +247,7 @@ Instead of embedding static (mock) todos as part of the application bundle, the 
 ```typescript
 const fetchTodos = async () => {
 	const response = await fetch("https://jsonplaceholder.typicode.com/todos");
-	const todos = await response.json();
+	const todos: ITodo[] = await response.json();
 
 	setTodos(todos.map(({ userId, ...todo }) => todo));
 };
@@ -284,7 +288,7 @@ A better way to differentiate whether or not data has been fetched, as well as t
   ```javascript
   try {
   	const response = await fetch("https://jsonplaceholder.typicode.com/todos");
-  	const todos = await response.json();
+  	const todos: ITodo[] = await response.json();
   	setTodos(todos);
   } catch (error) {}
   ```

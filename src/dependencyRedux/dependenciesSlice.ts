@@ -16,7 +16,7 @@ const dependenciesSlice = createSlice({
 
 	/**
 	 * The initialState must be named initialState. Since I have created a variable with
-	 * the same name, I can just use the shorthard version of the key/value pair.
+	 * the same name, I can just use the shorthand version of the key/value pair.
 	 *
 	 */
 	initialState,

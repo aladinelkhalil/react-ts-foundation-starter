@@ -112,7 +112,7 @@ As such, authentication state is best placed in a context that the application i
 
 To verify that the application context is working, do the following:
 
-- Wrapp the Users component with the `RouteGuard` component in the element-prop of the Route that handles the path "users".
+- Wrap the Users component with the `RouteGuard` component in the element-prop of the Route that handles the path "users".
 
 - Navigate to the /users route; it should redirect to the Login view.
 
@@ -148,7 +148,7 @@ To allow the user to logout, implement the comments marked with _TODO_ in the `c
 
 The logic for fetching users is now written in the `users` component with all the state and everything. Try to extract this logic to an `UsersSlice` and also add fetching statuses that the application can react to. Maybe show some feedback the fetch is loading or went wrong or something.
 
-Reducers as we have used them now, can only handle synchronous logic, but fetching is something asynchronous. For that we need something calld `createAsyncThunk` which is a function that is included in redux toolkit. Here is the link to the [documentation](https://redux-toolkit.js.org/api/createAsyncThunk). This optional is a challenge but it's worth it. You can also check the solution [repo](https://github.com/DerFahnrich/react-ts-foundation-final) for an example of this.
+Reducers as we have used them now, can only handle synchronous logic, but fetching is something asynchronous. For that we need something called `createAsyncThunk` which is a function that is included in redux toolkit. Here is the link to the [documentation](https://redux-toolkit.js.org/api/createAsyncThunk). This optional is a challenge but it's worth it. You can also check the solution [repository](https://github.com/Aarkan1/react-ts-foundation-final) for an example of this.
 
 ## Optional Parts - No solution exists
 
@@ -160,7 +160,7 @@ If you try to navigate to the /users route and then _quickly_ navigate back to h
 
 This happens because the code in useEffect, once data has been fetched, tries to update state, even though the component has already been unmounted (which occurred when you quickly navigated back to home).
 
-This problem can be solved in a couple of ways ([here](https://www.debuggr.io/react-update-unmounted-component/) is one solution) but along with using the useState and useEffect hooks, it all gets a bit cumbersome. Notice also that the users data is not cached but loaded everytime you navigate to the Users view.
+This problem can be solved in a couple of ways ([here](https://www.debuggr.io/react-update-unmounted-component/) is one solution) but along with using the useState and useEffect hooks, it all gets a bit cumbersome. Notice also that the users data is not cached but loaded every time you navigate to the Users view.
 
 For these and other reasons, it's recommended to use a robust 3rd party library for efficient data fetching. There are several libraries available, such as [SWR](https://swr.vercel.app/) and [react-query](https://react-query.tanstack.com/).
 

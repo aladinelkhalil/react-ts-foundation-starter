@@ -37,10 +37,10 @@ test("should reset the counter to 0 when the reset button is clicked", async () 
 		userEvent.click(incrementButton);
 	}
 
-	const resetButton = screen.getByRole("button", { name: /reset/i });
-
 	// This will match "Count: (any number not starting with 0)" in the p-tag.
-	const pContent = screen.getByText(/count: [1-9]\d*/i);
+	const pContent = screen.getByText(/count: [1-9]/i);
+
+	const resetButton = screen.getByRole("button", { name: /reset/i });
 
 	userEvent.click(resetButton);
 	expect(pContent).toHaveTextContent(/count: 0/i);

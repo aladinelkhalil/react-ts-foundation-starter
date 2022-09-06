@@ -1,12 +1,12 @@
 import "./style.css";
 
 // This interface can be extracted to an interface.ts file and imported here instead, since this one is used in multiple places.
-interface IItems {
+interface IItem {
 	title: string;
 	image: string;
 }
 
-const items: IItems[] = [
+const items: IItem[] = [
 	{
 		title: "first item",
 		image: "http://via.placeholder.com/350x150",

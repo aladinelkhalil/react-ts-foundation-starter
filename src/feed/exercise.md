@@ -4,7 +4,7 @@ In this exercise you will implement a number of component to render a simple "fe
 
 ## Part 0.5 - Typescript interfaces and types
 
-Create an **interface.ts** in the src folder. Place most of your different interfaces in this files so you have an easy acces point to the interfaces that you will use throughout this course. An interface can look like this:
+Create an **interface.ts** in the src folder. Place most of your different interfaces in this file so you have an easy access point to the interfaces that you will use throughout this course. An interface can look like this:
 
 ```javascript
 export interface ISomeInterface {
@@ -14,21 +14,21 @@ export interface ISomeInterface {
 }
 ```
 
-The export keyword is needed if you want to import the interface to your other files. I would also suggest that you prefix all your interfaces with a captial **I**. It's a pattern that is standard in C# and makes it easy to distinguish between variables and interfaces.
+The export keyword is needed if you want to import the interface to your other files. I would also suggest that you prefix all your interfaces with a capital **I**. It's a pattern that is standard in C# and makes it easy to distinguish between variables and interfaces.
 
 My suggestion is that you keep all interfaces that are used in multiple files in the **interface.ts** file. Interfaces that are created for props (or will only be used in its specific file) should be kept in their respective file since they are only going to be used there.
 
 If you find a use case for a _type_, e.g.:
 
 ```typescript
-const type specialId = number | string;
+const type SpecialId = number | string;
 
 // or
 
-const type someVariableFunction = (someString: string) => void;
+const type SomeVariableFunction = (someString: string) => void;
 ```
 
-Create a _types.ts_ and place it next to the _interface.ts_ file in the root folder.
+Create a _types.ts_ and place it next to the _interface.ts_ file in the src folder.
 
 ## Part 1 - Feed components
 
@@ -53,7 +53,7 @@ Implement the components listed below.
   ```html
   <div className="card card-medium">
   	<p className="card-title">{title.toUpperCase()}</p>
-  	<div><img className="card-image" src="{image}" alt="" /></div>
+  	<div><img className="card-image" src={image} alt="" /></div>
   </div>
   ```
 
