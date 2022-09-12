@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 
 import User from "../components/User";
 
@@ -13,7 +13,7 @@ const Users = (): JSX.Element => {
 	const [users, setUsers] = useState<IUser[] | null>(null);
 	const [user, setUser] = useState<IUser | null>(null);
 
-	const handleOnClick: React.MouseEventHandler<HTMLSpanElement> = (e) => {
+	const handleOnClick = (e: MouseEvent<HTMLSpanElement>) => {
 		const target = e.target as HTMLSpanElement;
 		const id = target.id;
 		const clickedUser = users?.find((u) => u.id === +id);
