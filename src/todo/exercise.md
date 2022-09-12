@@ -238,6 +238,8 @@ Instead of embedding static (mock) todos as part of the application bundle, the 
 
   **Question**: Is this better than simply having an empty array as the initial value?
 
+- Do the **Optional exercise** of **Part 2**.
+
 - Update the _useEffect_ for setting the document title - if no todos are yet available, display `Todos (N/A)`.
 
 - If the todos have not yet been fetched, _only_ display `Loading todos...` as the render output.
