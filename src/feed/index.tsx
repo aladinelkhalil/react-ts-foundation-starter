@@ -1,10 +1,7 @@
 import "./style.css";
 
-// This interface can be extracted to an interface.ts file and imported here instead, since this one is used in multiple places.
-interface IItem {
-	title: string;
-	image: string;
-}
+// Interface which are exported from the global interfaces file.
+import { IItem } from "../interfaces";
 
 const items: IItem[] = [
 	{

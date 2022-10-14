@@ -2,34 +2,6 @@
 
 In this exercise you will implement a number of component to render a simple "feed".
 
-## Part 0.5 - Typescript interfaces and types
-
-Create an **interface.ts** in the src folder. Place most of your different interfaces in this file so you have an easy access point to the interfaces that you will use throughout this course. An interface can look like this:
-
-```javascript
-export interface ISomeInterface {
-	name: string;
-	isShiny: boolean;
-	age: number;
-}
-```
-
-The export keyword is needed if you want to import the interface to your other files. I would also suggest that you prefix all your interfaces with a capital **I**. It's a pattern that is standard in C# and makes it easy to distinguish between variables and interfaces.
-
-My suggestion is that you keep all interfaces that are used in multiple files in the **interface.ts** file. Interfaces that are created for props (or will only be used in its specific file) should be kept in their respective file since they are only going to be used there.
-
-If you find a use case for a _type_, e.g.:
-
-```typescript
-const type SpecialId = number | string;
-
-// or
-
-const type SomeVariableFunction = (someString: string) => void;
-```
-
-Create a _types.ts_ and place it next to the _interface.ts_ file in the src folder.
-
 ## Part 1 - Feed components
 
 Implement the components listed below.
@@ -37,6 +9,14 @@ Implement the components listed below.
 - `index.tsx`
 
   Should render a _CardList_ component, passing a list of items as a prop.
+
+  ```ts
+  interface IProps {
+      items: IItem[];
+  }
+
+  const CardList = ({ items }: IProps): JSX.Element => {}
+  ```
 
 - `CardList.tsx`
 
@@ -59,6 +39,10 @@ Implement the components listed below.
 
   This component renders the _title_ prop with uppercase letters. Don't forget to create the interface for the props.
 
+  ```ts
+  const Card = ({ title, image }: IItem): JSX.Element => {}
+  ```
+
   > Note that CSS classes are added to an element using the attribute _className_ instead of _class_.
 
 - OPTIONAL:
@@ -66,6 +50,14 @@ Implement the components listed below.
   Currently, a _Card_ is rendered with a default width of 350px (see the CSS class _card-medium_ in `style.css`).
 
   Make the _Card_ component more flexible by passing an additional _size_ prop (should be optional) with one of the following (string) values: **small**, **medium** and **large**.
+
+  ```ts
+  interface IProps extends IItem {
+      size?: "small" | "medium" | "large";
+  }
+
+  const Card = ({ title, image, size }: IProps): JSX.Element => {}
+  ```
 
   The component should **not** contain logic for determining the actual width values, these are set in the CSS file. The component should combine the _size_ prop with the CSS classes contained in `style.css` in a generic fashion.
 
@@ -102,13 +94,19 @@ class ErrorBoundary extends Component<IProps, IState> {
 export default ErrorBoundary;
 ```
 
-1. In _CardList_, wrap the rendering of items in an error boundary. Also add logic in the ErrorBoundary component for checking if an error has been caught and if so, render the following fallback UI:
+1. In _Card_, add the following snippet to simulate an error in one of the items:
+
+```js
+if (title === "second item") throw new Error();
+```
+
+2. In _CardList_, wrap the rendering of items in an error boundary. Also add logic in the ErrorBoundary component for checking if an error has been caught and if so, render the following fallback UI:
 
 ```html
 <p>An error occurred while rendering the feed</p>
 ```
 
-2. A React application should strive for maximum _fault tolerance_, i.e. to continue function even if errors occur. In our case, if rendering a single feed item throws an error, the other feed items should still be displayed, while rendering a fallback _Card_ for the faulty feed item.
+3. A React application should strive for maximum _fault tolerance_, i.e. to continue function even if errors occur. In our case, if rendering a single feed item throws an error, the other feed items should still be displayed, while rendering a fallback _Card_ for the faulty feed item.
 
 Change _CardList_ to wrap each _Card_ in an error boundary instead. In the _ErrorBoundary_ component, render the following fallback UI:
 
@@ -128,24 +126,20 @@ Currently, the _ErrorBoundary_ component contains logic for rendering specific f
 In order to build a reusable _ErrorBoundary_ component, the logic for rendering a fallback UI must be **externalized**. Imagine if _ErrorBoundary_ were to be used as follows:
 
 ```javascript
-<ErrorBoundary>
-	{(error) => {
-		if (error) {
-			return "An error occurred while trying to render SomeComponent";
-		}
-
-		return <SomeComponent />;
-	}}
+<ErrorBoundary
+  fallback={() => (
+    <p>An error occurred while trying to render SomeComponent</p>
+  )}
+>
+	<SomeComponent />
 </ErrorBoundary>
 ```
 
-Notice that we're passing a _function_ as the value for the `children` prop; this is an example of the [Render Props patterns](https://reactjs.org/docs/render-props.html) and helps us to share logic across components.
+Notice that we're passing a _function_ as the value for the `fallback` prop; this is an example of the [Render Props patterns](https://reactjs.org/docs/render-props.html) and helps us to share logic across components.
 
 Change _ErrorBoundary_ to support the Render Props pattern, and change _CardList_ from step 2 accordingly.
 
 ### Optional
-_No solution exists for this optional_
-
 Currently, if a component throws an error while rendering, _ErrorBoundary_ does not allow for retrying rendering the component.
 
 E.g., if a _CardList_ is passed a list of items which is `null` or `undefined`, it will throw an error. Handle this error as follows:

@@ -14,56 +14,6 @@ The application has a link to navigate to a page component ("view") - `pages/Use
 
    Try a path such as _http://localhost:3000/foo_ to verify that the catch-all route works.
 
-## Part 2 - Redux
-
-(For context instructions, look farther down)
-
-As part of the application requirements, the /users route must be protected, i.e. an user must be logged in to see the list of users.
-
-The state of a logged in user must be shared among several components in the component tree, including:
-
-- The `components/RouteGuard` component, which determines whether or not a route should be rendered based on authentication status.
-
-- The `pages/Login` view, which enables a user to log in.
-
-- The `components/Navigation` component, which renders a logout button only if the user is logged in.
-
-As such, authentication state is best placed in a redux state manager that can be used throughout the application.
-
-> Refer to the `dependencyRedux` example for guidance when implementing the steps below.
-
-1. Create a `store.ts` file. This is the content it should have:
-
-```typescript
-import { configureStore } from "@reduxjs/toolkit";
-
-export const store = configureStore({
-	reducer: {
-		// TODO: Implement the slice/slices you need.
-	},
-});
-
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
-/**
- * These hooks is just an implementation of the already existing hooks in
- * redux, we have just given them the correct typing.
- */
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-```
-
-2. Create the `authSlice.ts` file. In here you need a couple of imports but you also need to define the state for the slice. This should be an interface called _IAuthState_ and it should contain a _user_ and a _loginError_.
-
-3. Create the slice and it should contain two reducer functions. One for _login_ and one for _logout_, they should interact with the state (both _user_ and _loginError_) in a proper way. You can decide yourself how you implement the login functionality in your application. In the example solution, if the user types in "admin" in the input field, they get logged in. The "admin"-string is than set as the value of the IAuthState user. See the context section for some hints.
-   Don't forget to make to proper exports at the bottom of the file.
-
-4. In the `index.tsx` file you need to wrap your JSX in a **Provider** element. This element is what gives all the nested elements access to the global state. The **Provider** accepts an attribute **store** which should have the value of the exported variable from the **store.ts** file.
-
-5. To try out that your redux store works, do the TODOS in the `RouteGuard` component. Wrap the Users component with the `RouteGuard` component in the element-prop of the Route that handles the path "users". Navigate to the /users route; it should redirect to the Login view.
-
 ## Part 2 - Context
 
 As part of the application requirements, the /users route must be protected, i.e. an user must be logged in to see the list of users.
@@ -117,6 +67,56 @@ To verify that the application context is working, do the following:
 - Navigate to the /users route; it should redirect to the Login view.
 
 If you inspect the RouteGuard component, you'll see that it accesses the authentication state to determine whether or not to render a guarded route. As the user has not logged in (and as we haven't implemented login functionality yet), it redirects to the Login view.
+
+## Part 2 - Redux
+
+(For context instructions, look farther down)
+
+As part of the application requirements, the /users route must be protected, i.e. an user must be logged in to see the list of users.
+
+The state of a logged in user must be shared among several components in the component tree, including:
+
+- The `components/RouteGuard` component, which determines whether or not a route should be rendered based on authentication status.
+
+- The `pages/Login` view, which enables a user to log in.
+
+- The `components/Navigation` component, which renders a logout button only if the user is logged in.
+
+As such, authentication state is best placed in a redux state manager that can be used throughout the application.
+
+> Refer to the `dependencyRedux` example for guidance when implementing the steps below.
+
+1. Create a `store.ts` file. This is the content it should have:
+
+```typescript
+import { configureStore } from "@reduxjs/toolkit";
+
+export const store = configureStore({
+	reducer: {
+		// TODO: Implement the slice/slices you need.
+	},
+});
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+/**
+ * These hooks is just an implementation of the already existing hooks in
+ * redux, we have just given them the correct typing.
+ */
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+```
+
+2. Create the `authSlice.ts` file. In here you need a couple of imports but you also need to define the state for the slice. This should be an interface called _IAuthState_ and it should contain a _user_ and a _loginError_.
+
+3. Create the slice and it should contain two reducer functions. One for _login_ and one for _logout_, they should interact with the state (both _user_ and _loginError_) in a proper way. You can decide yourself how you implement the login functionality in your application. In the example solution, if the user types in "admin" in the input field, they get logged in. The "admin"-string is than set as the value of the IAuthState user. See the context section for some hints.
+   Don't forget to make to proper exports at the bottom of the file.
+
+4. In the `index.tsx` file you need to wrap your JSX in a **Provider** element. This element is what gives all the nested elements access to the global state. The **Provider** accepts an attribute **store** which should have the value of the exported variable from the **store.ts** file.
+
+5. To try out that your redux store works, do the TODOS in the `RouteGuard` component. Wrap the Users component with the `RouteGuard` component in the element-prop of the Route that handles the path "users". Navigate to the /users route; it should redirect to the Login view.
 
 ## Optional
 

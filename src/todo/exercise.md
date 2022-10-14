@@ -34,11 +34,22 @@ The component's markup:
 
 Apply the styling to the _input_ element.
 
-(Render _TodoForm_ in _App_)
+> (Render _TodoForm_ in _App_)
 
 ### TodoList
 
 A _TodoList_ component that has the sole responsibility to render all the todos. It accepts a prop called "todos" from the the _App_ component.
+
+Create the `ITodo` interface in the global *interfaces.ts* file. 
+> Look at the todo object structure in `todos.json` to determine how the interface should look like.
+
+```ts
+interface IProps {
+    todos: ITodo[];
+}
+
+const TodoList = ({ todos }: IProps): JSX.Element => {}
+```
 
 It should return this simple markup:
 
@@ -48,27 +59,21 @@ It should return this simple markup:
 </div>
 ```
 
-(Render _TodoList_ in _App_ underneath the _TodoForm_)
+> (Render _TodoList_ in _App_ underneath the _TodoForm_)
 
 ### Todo
 
 The _Todo_ component renders exactly one todo object.
 
-> See `todos.json` for the structure of a todo object.
+_Todo_ accepts the `ITodo` interface as its props.
+
+> You already solved this in exercise: feed/part 1
 
 Import styled-components:
 
 ```javascript
 import styled from "styled-components";
 ```
-
-_Todo_ accepts the following (required) props:
-
-- id: `number`
-- title: `string`
-- completed: `boolean`
-
-Create an interface for these props.
 
 It returns the following markup:
 
@@ -121,6 +126,19 @@ Create the following styled components, and put them in a separate file called _
   text-decoration: ; /* 'line-through' if completed, otherwise 'none' */
   ```
 
+  With TypeScript, if using styled components with props it needs to have the props typed:
+
+  ```ts
+  interface IParagraphProps {
+    primary: boolean;
+  }
+
+  const Paragraph = styled.p<IParagraphProps>`
+    /* Adapt the colors based on primary prop */
+    background: ${props => props.primary ? "red" : "white"};
+  `
+  ```
+
   > See [Adapting based on props](https://styled-components.com/docs/basics#adapting-based-on-props) in the styled-components documentation.
 
 - _Button_: a `button` styled with:
@@ -168,12 +186,14 @@ const [value, setValue] = useState<number>(0);
 
   > Note: You'll now render the list of todos managed by _useState_ instead of the previous _initialTodos_!
 
+- Update `userId` in `ITodo` interface to be optional.
+
 - Create a callback function _createTodo_ in the _App_ component:
 
   ```typescript
   const createTodo = (title: string) => {
   	// update the state (= list of todos) by adding a new todo object - with the passed title - first in the list:
-  	const newTodo = {
+  	const newTodo: ITodo = {
   		id: Date.now(),
   		completed: false,
   		title,
@@ -233,10 +253,10 @@ Instead of embedding static (mock) todos as part of the application bundle, the 
 - To differentiate between whether todos have been fetched or not, change the _useState_ hook call for the todos to:
 
   ```typescript
-  const [todos, setTodos] = useState<ITodo[] | null>(null);
+  const [todos, setTodos] = useState<ITodo[]>([]);
   ```
 
-  **Question**: Is this better than simply having an empty array as the initial value?
+  **Question**: Is this better than having `null` as the initial value? Why?
 
 - Do the **Optional exercise** of **Part 2**.
 
@@ -252,12 +272,15 @@ const fetchTodos = async () => {
 	const todos: ITodo[] = await response.json();
 
 	setTodos(todos.map(({ userId, ...todo }) => todo));
+  // Notice that todos.map extracts a todo without the userId
 };
 
 fetchTodos();
 ```
 
 **Important**: Ensure that the todos are only fetched once!
+
+> With React 18 the `useEffect` with empty dependencies get's ran twice in development. See this [StackOverflow answer](https://stackoverflow.com/a/72238236) for a good explanation to why this is good.
 
 ### Optional: Fetching status
 
