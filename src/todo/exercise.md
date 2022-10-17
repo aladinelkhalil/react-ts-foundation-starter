@@ -10,6 +10,14 @@ In this part of the exercise, a couple of components are to be created with prop
 
 The _TodoForm_ component (in `TodoForm.tsx`) allows the user to enter a title and create a new todo.
 
+The component's markup:
+
+```html
+<form>
+	<input placeholder="What do you need to do?" />
+</form>
+```
+
 **Inline styling** is to be used, with the following CSS properties:
 
 ```javascript
@@ -23,15 +31,6 @@ The _TodoForm_ component (in `TodoForm.tsx`) allows the user to enter a title an
   border: 'none'
 }
 ```
-
-The component's markup:
-
-```html
-<form>
-	<input placeholder="What do you need to do?" />
-</form>
-```
-
 Apply the styling to the _input_ element.
 
 > (Render _TodoForm_ in _App_)
@@ -42,14 +41,6 @@ A _TodoList_ component that has the sole responsibility to render all the todos.
 
 Create the `ITodo` interface in the global *interfaces.ts* file. 
 > Look at the todo object structure in `todos.json` to determine how the interface should look like.
-
-```ts
-interface IProps {
-    todos: ITodo[];
-}
-
-const TodoList = ({ todos }: IProps): JSX.Element => {}
-```
 
 It should return this simple markup:
 

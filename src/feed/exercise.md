@@ -1,6 +1,6 @@
 # Exercise: feed
 
-In this exercise you will implement a number of component to render a simple "feed".
+In this exercise you will implement a number of components to render a simple "feed".
 
 ## Part 1 - Feed components
 
@@ -9,14 +9,6 @@ Implement the components listed below.
 - `index.tsx`
 
   Should render a _CardList_ component, passing a list of items as a prop.
-
-  ```ts
-  interface IProps {
-      items: IItem[];
-  }
-
-  const CardList = ({ items }: IProps): JSX.Element => {}
-  ```
 
 - `CardList.tsx`
 
@@ -37,11 +29,7 @@ Implement the components listed below.
   </div>
   ```
 
-  This component renders the _title_ prop with uppercase letters. Don't forget to create the interface for the props.
-
-  ```ts
-  const Card = ({ title, image }: IItem): JSX.Element => {}
-  ```
+  This component renders the _title_ prop with uppercase letters. 
 
   > Note that CSS classes are added to an element using the attribute _className_ instead of _class_.
 
@@ -50,14 +38,6 @@ Implement the components listed below.
   Currently, a _Card_ is rendered with a default width of 350px (see the CSS class _card-medium_ in `style.css`).
 
   Make the _Card_ component more flexible by passing an additional _size_ prop (should be optional) with one of the following (string) values: **small**, **medium** and **large**.
-
-  ```ts
-  interface IProps extends IItem {
-      size?: "small" | "medium" | "large";
-  }
-
-  const Card = ({ title, image, size }: IProps): JSX.Element => {}
-  ```
 
   The component should **not** contain logic for determining the actual width values, these are set in the CSS file. The component should combine the _size_ prop with the CSS classes contained in `style.css` in a generic fashion.
 
@@ -94,7 +74,7 @@ class ErrorBoundary extends Component<IProps, IState> {
 export default ErrorBoundary;
 ```
 
-1. In _Card_, add the following snippet to simulate an error in one of the items:
+1. In _Card_, add the following snippet to simulate an error in the second item:
 
 ```js
 if (title === "second item") throw new Error();
